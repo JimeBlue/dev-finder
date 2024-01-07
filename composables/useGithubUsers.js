@@ -1,14 +1,22 @@
-export const useGithubUsers = () => {
-  const apiUrl = process.env.GITHUB_USERS_API
+export const useGithubUsers = (githubUsername) => {
+  const config = useRuntimeConfig()
+  // Make username a ref and initialize with the initialUsername or 'octocat'
+  const username = ref(githubUsername || 'octocat')
+  const apiUrl = ref(`${config.public.githubUsersApi}/${username.value}`)
 
   const {
-    data: users,
+    data: user,
     pending,
     error,
     refresh,
-  } = useAsyncData(() => {
-    return $fetch(apiUrl)
+  } = useAsyncData(() => $fetch(apiUrl.value), { watch: username })
+
+  // Watch the username ref for changes and update the apiUrl accordingly
+  watch(username, (newUsername) => {
+    apiUrl.value = `${config.public.githubUsersApi}/${newUsername}`
+    // Use refresh() here to re-fetch the data whenever the username changes.
+    refresh()
   })
 
-  return { users, pending, error, refresh }
+  return { user, pending, error, refresh }
 }

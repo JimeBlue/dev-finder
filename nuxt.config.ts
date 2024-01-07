@@ -10,4 +10,15 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  runtimeConfig: {
+    // Public runtime config
+    public: {
+      githubUsersApi:
+        process.env.GITHUB_USERS_API || 'https://api.github.com/users',
+    },
+    // Private runtime config (server-side only)
+    private: {
+      // Example: privateApiKey: process.env.PRIVATE_API_KEY,
+    },
+  },
 })
