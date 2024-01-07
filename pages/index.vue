@@ -1,3 +1,9 @@
 <template>
-  <section><P>I'm the index page</P></section>
+  <section>
+    <h1>GitHub Users</h1>
+    <pre> {{ users }} </pre>
+  </section>
 </template>
+<script setup>
+const { users, pending, error } = useGithubUsers()
+</script>
