@@ -1,5 +1,7 @@
 <template>
   <div>
-    <section class="text-blue-500">Dev Finder!</section>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
