@@ -1,22 +1,31 @@
+import debounce from 'lodash.debounce'
 export const useGithubUsers = (githubUsername) => {
   const config = useRuntimeConfig()
-  // Make username a ref and initialize with the initialUsername or 'octocat'
-  const username = ref(githubUsername || 'octocat')
-  const apiUrl = ref(`${config.public.githubUsersApi}/${username.value}`)
-
+  const username = ref(githubUsername)
+  // Computed property for the API URL
+  const apiUrl = computed(() => {
+    return username.value
+      ? `${config.public.githubUsersApi}/${username.value}`
+      : null
+  })
   const {
     data: user,
     pending,
     error,
     refresh,
-  } = useAsyncData(() => $fetch(apiUrl.value), { watch: username })
-
-  // Watch the username ref for changes and update the apiUrl accordingly
-  watch(username, (newUsername) => {
-    apiUrl.value = `${config.public.githubUsersApi}/${newUsername}`
-    // Use refresh() here to re-fetch the data whenever the username changes.
-    refresh()
+  } = useAsyncData(() => {
+    // Make sure the apiUrl is not null
+    if (apiUrl.value) {
+      return $fetch(apiUrl.value)
+    }
   })
-
-  return { user, pending, error, refresh }
+  // Debounce the refresh function
+  const debouncedRefresh = debounce(refresh, 500)
+  // Watch the apiUrl and call the debounced refresh function
+  watchEffect(() => {
+    if (apiUrl.value) {
+      debouncedRefresh()
+    }
+  })
+  return { user, pending, error, refresh: debouncedRefresh }
 }
