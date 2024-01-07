@@ -1,5 +1,5 @@
 <template>
   <div>
-    <section>Dev Finder</section>
+    <section class="text-blue-500">Dev Finder!</section>
   </div>
 </template>
