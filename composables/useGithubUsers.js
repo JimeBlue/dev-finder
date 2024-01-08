@@ -1,31 +1,41 @@
 import debounce from 'lodash.debounce'
+
 export const useGithubUsers = (githubUsername) => {
   const config = useRuntimeConfig()
   const username = ref(githubUsername)
-  // Computed property for the API URL
-  const apiUrl = computed(() => {
-    return username.value
-      ? `${config.public.githubUsersApi}/${username.value}`
-      : null
-  })
+  const userNotFound = ref(false)
+
+  // Define the API URL as a computed property
+  const apiUrl = computed(() =>
+    username.value ? `${config.public.githubUsersApi}/${username.value}` : null,
+  )
+
+  // Fetch user data and handle errors
   const {
     data: user,
     pending,
     error,
     refresh,
   } = useAsyncData(() => {
-    // Make sure the apiUrl is not null
     if (apiUrl.value) {
-      return $fetch(apiUrl.value)
+      return $fetch(apiUrl.value).catch((err) => {
+        if (err.response && err.response.status === 404) {
+          userNotFound.value = true
+          return null
+        }
+        throw err
+      })
     }
   })
+
   // Debounce the refresh function
   const debouncedRefresh = debounce(refresh, 500)
-  // Watch the apiUrl and call the debounced refresh function
-  watchEffect(() => {
-    if (apiUrl.value) {
-      debouncedRefresh()
-    }
+
+  // Watch for changes in the username and refresh the data
+  watch(username, () => {
+    userNotFound.value = false // Reset the user not found state
+    debouncedRefresh()
   })
-  return { user, pending, error, refresh: debouncedRefresh }
+
+  return { user, pending, error, refresh: debouncedRefresh, userNotFound }
 }
