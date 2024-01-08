@@ -2,8 +2,12 @@
   <section v-if="loading">Loading...</section>
   <section v-else-if="error">{{ error }}</section>
   <section v-if="user">
+    <pre> {{ user }} </pre>
     <hgroup>
-      <h1>{{ user.name }}</h1>
+      <h1>
+        <span v-if="user.name">{{ user.name }}</span
+        ><span v-else>{{ user.login }}</span>
+      </h1>
       <h2>@{{ user.login }}</h2>
       <p>Joined {{ joinedDate }}</p>
     </hgroup>
