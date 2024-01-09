@@ -8,7 +8,7 @@
         ><span v-else>{{ user.login }}</span>
       </h1>
       <h2>@{{ user.login }}</h2>
-      <p>Joined {{ joinedDate }}</p>
+      <p class="text-blue-500 dark:text-slate-900">Joined {{ joinedDate }}</p>
     </hgroup>
     <img :src="user.avatar_url" :alt="`Avatar for ${user.login}`" width="100" />
     <ul>
@@ -31,6 +31,7 @@
 </template>
 
 <script setup>
+useDarkMode()
 const props = defineProps({
   user: Object,
   loading: Boolean,

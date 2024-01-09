@@ -1,6 +1,7 @@
 <template>
   <section>
-    <h1>GitHub Users</h1>
+    <button @click="toggleDarkMode">Toggle Dark Mode</button>
+    <h1 class="text-blue-500 dark:text-slate-900">GitHub Users</h1>
     <form @submit.prevent="triggerSearch">
       <input v-model="searchUsername" placeholder="Enter GitHub username" />
       <button type="submit">Search</button>
@@ -10,6 +11,7 @@
 </template>
 
 <script setup>
+const { toggleDarkMode } = useDarkMode()
 const { user, pending, error, searchUser, userNotFound } =
   useGithubUsers('JimeBlue')
 
