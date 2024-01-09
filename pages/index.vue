@@ -10,7 +10,8 @@
 </template>
 
 <script setup>
-const { user, pending, error, searchUser, userNotFound } = useGithubUsers()
+const { user, pending, error, searchUser, userNotFound } =
+  useGithubUsers('JimeBlue')
 
 const searchUsername = ref('')
 

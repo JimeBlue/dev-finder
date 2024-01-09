@@ -1,4 +1,4 @@
-export const useGithubUsers = () => {
+export const useGithubUsers = (initialUsername = '') => {
   const config = useRuntimeConfig()
   const username = ref('')
   const userNotFound = ref(false)
@@ -26,12 +26,13 @@ export const useGithubUsers = () => {
 
   const searchUser = (searchUsername) => {
     userNotFound.value = false
-    username.value = searchUsername // Update the username ref with the new username
+    username.value = searchUsername
     refresh()
   }
 
-  // Initialize the user profile with 'JimeBlue' on creation
-  searchUser('JimeBlue')
+  if (initialUsername) {
+    searchUser(initialUsername)
+  }
 
   return { user, pending, error, searchUser, userNotFound }
 }
