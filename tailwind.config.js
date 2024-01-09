@@ -9,7 +9,17 @@ export default {
     './error.vue',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: [
+          'Space Mono',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif',
+        ],
+      },
+    },
   },
   darkMode: 'class', // Enable class-based dark mode
   plugins: [],
