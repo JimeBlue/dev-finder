@@ -1,16 +1,12 @@
-import debounce from 'lodash.debounce'
-
-export const useGithubUsers = (githubUsername) => {
+export const useGithubUsers = () => {
   const config = useRuntimeConfig()
-  const username = ref(githubUsername)
+  const username = ref('')
   const userNotFound = ref(false)
 
-  // Define the API URL as a computed property
   const apiUrl = computed(() =>
     username.value ? `${config.public.githubUsersApi}/${username.value}` : null,
   )
 
-  // Fetch user data and handle errors
   const {
     data: user,
     pending,
@@ -28,14 +24,14 @@ export const useGithubUsers = (githubUsername) => {
     }
   })
 
-  // Debounce the refresh function
-  const debouncedRefresh = debounce(refresh, 500)
+  const searchUser = (searchUsername) => {
+    userNotFound.value = false
+    username.value = searchUsername // Update the username ref with the new username
+    refresh()
+  }
 
-  // Watch for changes in the username and refresh the data
-  watch(username, () => {
-    userNotFound.value = false // Reset the user not found state
-    debouncedRefresh()
-  })
+  // Initialize the user profile with 'jime' on creation
+  searchUser('jime')
 
-  return { user, pending, error, refresh: debouncedRefresh, userNotFound }
+  return { user, pending, error, searchUser, userNotFound }
 }

@@ -2,7 +2,6 @@
   <section v-if="loading">Loading...</section>
   <section v-else-if="error">{{ error }}</section>
   <section v-if="user">
-    <pre> {{ user }} </pre>
     <hgroup>
       <h1>
         <span v-if="user.name">{{ user.name }}</span

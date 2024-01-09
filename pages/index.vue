@@ -1,21 +1,17 @@
 <template>
   <section>
     <h1>GitHub Users</h1>
-    <input
-      v-model="searchUsername"
-      placeholder="Enter GitHub username"
-      @input="refresh"
-    />
+    <input v-model="searchUsername" placeholder="Enter GitHub username" />
+    <button @click="() => searchUser(searchUsername)">Search</button>
     <UserProfile :user="user" :loading="pending" :error="apiError" />
   </section>
 </template>
 
 <script setup>
-const searchUsername = ref('octocat')
-const { user, pending, error, refresh, userNotFound } =
-  useGithubUsers(searchUsername)
+const { user, pending, error, searchUser, userNotFound } = useGithubUsers()
 
-// Computes type of error from API
+const searchUsername = ref('')
+
 const apiError = computed(() => {
   if (userNotFound.value) {
     return 'No results'
