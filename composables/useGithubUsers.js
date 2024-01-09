@@ -31,7 +31,7 @@ export const useGithubUsers = () => {
   }
 
   // Initialize the user profile with 'jime' on creation
-  searchUser('jime')
+  searchUser('jimeblue')
 
   return { user, pending, error, searchUser, userNotFound }
 }

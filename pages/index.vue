@@ -1,8 +1,10 @@
 <template>
   <section>
     <h1>GitHub Users</h1>
-    <input v-model="searchUsername" placeholder="Enter GitHub username" />
-    <button @click="() => searchUser(searchUsername)">Search</button>
+    <form @submit.prevent="triggerSearch">
+      <input v-model="searchUsername" placeholder="Enter GitHub username" />
+      <button type="submit">Search</button>
+    </form>
     <UserProfile :user="user" :loading="pending" :error="apiError" />
   </section>
 </template>
@@ -20,4 +22,8 @@ const apiError = computed(() => {
   }
   return null
 })
+
+const triggerSearch = () => {
+  searchUser(searchUsername.value)
+}
 </script>
