@@ -18,7 +18,7 @@
     <h1 class="text-blue-500 dark:text-slate-900">GitHub Users</h1>
     <form @submit.prevent="triggerSearch">
       <input v-model="searchUsername" placeholder="Enter GitHub username" />
-      <button type="submit">Search</button>
+      <button type="submit" class="btn btn-primary">Search</button>
     </form>
     <UserProfile :user="user" :loading="pending" :error="apiError" />
   </section>
