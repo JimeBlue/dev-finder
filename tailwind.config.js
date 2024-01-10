@@ -17,6 +17,11 @@ export default {
         gray: {
           900: '#141d2f',
         },
+        'blue-gray': {
+          300: '#90a4d4',
+          400: '#697c9a',
+          800: '#2b3442',
+        },
       },
       fontFamily: {
         sans: [

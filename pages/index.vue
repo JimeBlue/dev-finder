@@ -1,12 +1,27 @@
 <template>
   <section>
-    <button @click="toggleDarkMode">
+    <!-- <button @click="toggleDarkMode">
       <span v-if="!darkMode" class="inline-flex"
         ><span>light</span> <IconsSun class="w-8 h-8 text-red-500"
       /></span>
       <span v-if="darkMode" class="inline-flex"
         ><span>dark</span> <IconsMoon class="w-8 h-8 text-red-500"
       /></span>
+    </button> -->
+    <button
+      @click="toggleDarkMode"
+      class="flex space-x-4 items-center text-sm transition duration-300"
+      :class="
+        darkMode
+          ? 'text-white hover:text-blue-gray-300'
+          : 'text-blue-gray-400 hover:text-blue-gray-800'
+      "
+    >
+      <span>
+        {{ darkMode ? 'LIGHT' : 'DARK' }}
+      </span>
+      <IconsMoon v-if="darkMode" />
+      <IconsSun v-else />
     </button>
     <h1 class="text-blue-500 dark:text-slate-900">GitHub Users</h1>
     <form @submit.prevent="triggerSearch">
