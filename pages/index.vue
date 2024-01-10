@@ -1,13 +1,5 @@
 <template>
-  <section>
-    <!-- <button @click="toggleDarkMode">
-      <span v-if="!darkMode" class="inline-flex"
-        ><span>light</span> <IconsSun class="w-8 h-8 text-red-500"
-      /></span>
-      <span v-if="darkMode" class="inline-flex"
-        ><span>dark</span> <IconsMoon class="w-8 h-8 text-red-500"
-      /></span>
-    </button> -->
+  <section class="text-blue-500 dark:text-white">
     <button
       @click="toggleDarkMode"
       class="flex space-x-4 items-center text-sm transition duration-300"
