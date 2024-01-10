@@ -10,6 +10,14 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        blue: {
+          100: '#f6f8ff',
+        },
+        gray: {
+          900: '#141d2f',
+        },
+      },
       fontFamily: {
         sans: [
           'Space Mono',
