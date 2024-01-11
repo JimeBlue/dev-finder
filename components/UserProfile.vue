@@ -16,10 +16,33 @@
         {{ item }}
       </li>
     </ul>
-    <ul>
-      <li>{{ user.public_repos }} Repositories</li>
-      <li>{{ user.followers }} Followers</li>
-      <li>{{ user.following }} Following</li>
+    <ul
+      class="bg-blue-100 dark:bg-gray-900 rounded-xl py-4 px-6 flex items-center justify-between"
+    >
+      <li>
+        <h3 class="text-xs sm:text-sm">Repos</h3>
+        <p
+          class="text-base sm:text-xl font-bold text-blue-gray-800 dark:text-white"
+        >
+          {{ user.public_repos }}
+        </p>
+      </li>
+      <li>
+        <h3 class="text-xs sm:text-sm">Followers</h3>
+        <p
+          class="text-base sm:text-xl font-bold text-blue-gray-800 dark:text-white"
+        >
+          {{ user.followers }}
+        </p>
+      </li>
+      <li>
+        <h3 class="text-xs sm:text-sm">Following</h3>
+        <p
+          class="text-base sm:text-xl font-bold text-blue-gray-800 dark:text-white"
+        >
+          {{ user.following }}
+        </p>
+      </li>
     </ul>
     <ul>
       <li v-if="user.location">Location: {{ user.location }}</li>
