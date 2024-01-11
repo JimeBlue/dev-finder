@@ -16,31 +16,16 @@
         {{ item }}
       </li>
     </ul>
+
     <ul
       class="bg-blue-100 dark:bg-gray-900 rounded-xl py-4 px-6 flex items-center justify-between"
     >
-      <li>
-        <h3 class="text-xs sm:text-sm">Repos</h3>
+      <li v-for="(item, index) in statsData" :key="index">
+        <h3 class="text-xs sm:text-sm">{{ item.label }}</h3>
         <p
           class="text-base sm:text-xl font-bold text-blue-gray-800 dark:text-white"
         >
-          {{ user.public_repos }}
-        </p>
-      </li>
-      <li>
-        <h3 class="text-xs sm:text-sm">Followers</h3>
-        <p
-          class="text-base sm:text-xl font-bold text-blue-gray-800 dark:text-white"
-        >
-          {{ user.followers }}
-        </p>
-      </li>
-      <li>
-        <h3 class="text-xs sm:text-sm">Following</h3>
-        <p
-          class="text-base sm:text-xl font-bold text-blue-gray-800 dark:text-white"
-        >
-          {{ user.following }}
+          {{ item.value }}
         </p>
       </li>
     </ul>
@@ -78,5 +63,24 @@ const bioItems = computed(() => {
   return props.user && props.user.bio && typeof props.user.bio === 'string'
     ? props.user.bio.split('\r\n').filter(Boolean)
     : []
+})
+
+// Creates an array of objects for user stats section
+const statsData = computed(() => {
+  const data = [
+    {
+      label: 'Repos',
+      value: props.user ? props.user.public_repos : 0,
+    },
+    {
+      label: 'Followers',
+      value: props.user ? props.user.followers : 0,
+    },
+    {
+      label: 'Following',
+      value: props.user ? props.user.following : 0,
+    },
+  ]
+  return data
 })
 </script>
