@@ -16,7 +16,7 @@
         {{ item }}
       </li>
     </ul>
-
+    <!-- NOTE: user stats -->
     <ul
       class="bg-blue-100 dark:bg-gray-900 rounded-xl py-4 px-6 flex items-center justify-between"
     >
@@ -29,11 +29,26 @@
         </p>
       </li>
     </ul>
-    <ul>
-      <li v-if="user.location">Location: {{ user.location }}</li>
-      <li v-if="user.twitter_username">Twitter: {{ user.twitter_username }}</li>
-      <li v-if="user.blog">Blog: {{ user.blog }}</li>
-      <li v-if="user.company">Company: {{ user.company }}</li>
+
+    <!-- NOTE: user links -->
+
+    <ul
+      class="grid grid-cols-1 gap-y-4 md:grid-cols-2 md:grid-rows-2 md:gap-y-0 md:gap-4"
+    >
+      <li
+        v-for="(item, index) in userLinksData"
+        :key="index"
+        class="flex items-center space-x-4 text-sm md:text-base"
+        :class="{ 'text-gray-400': item.disabled }"
+      >
+        <iconify-icon :icon="item.icon" height="20" width="20"></iconify-icon
+        ><a
+          :href="item.url"
+          target="_blank"
+          :class="{ 'hover:underline': item.url }"
+          >{{ item.link }}
+        </a>
+      </li>
     </ul>
   </section>
 </template>
@@ -79,6 +94,64 @@ const statsData = computed(() => {
     {
       label: 'Following',
       value: props.user ? props.user.following : 0,
+    },
+  ]
+  return data
+})
+
+// Data for user links section
+const userLinksData = computed(() => {
+  const formatCompanyUrl = (company) => {
+    if (!company) return null
+
+    // Remove any characters that are not allowed in GitHub usernames
+    // GitHub usernames can only have alphanumeric characters or hyphens and cannot begin with a hyphen
+    const sanitized = company.replace(/^[^\w-]+|[^0-9a-zA-Z-]+/g, '')
+
+    return `https://github.com/${sanitized}`
+  }
+
+  const formatTwitterUrl = (username) => {
+    if (!username) return null
+
+    // Username does not contain '@' symbol already
+    return `https://twitter.com/${username}`
+  }
+
+  const formatBlogUrl = (url) => {
+    if (!url) return 'Not Available'
+
+    // Remove 'http://' or 'https://' from the URL
+    return url.replace(/^https?:\/\//, '')
+  }
+
+  // Creates an array of objects for user links section
+  const data = [
+    {
+      icon: 'mdi:location',
+      link: props.user.location ? props.user.location : 'Not Available',
+      disabled: !props.user.location,
+      url: '',
+    },
+    {
+      icon: 'mdi:twitter',
+      link: props.user.twitter_username
+        ? props.user.twitter_username
+        : 'Not Available',
+      disabled: !props.user.twitter_username,
+      url: formatTwitterUrl(props.user.twitter_username),
+    },
+    {
+      icon: 'pepicons-pop:chain',
+      link: formatBlogUrl(props.user.blog),
+      disabled: !props.user.blog,
+      url: props.user.blog,
+    },
+    {
+      icon: 'fluent:building-20-filled',
+      link: props.user.company ? props.user.company : 'Not Available',
+      disabled: !props.user.company,
+      url: formatCompanyUrl(props.user.company),
     },
   ]
   return data

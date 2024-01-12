@@ -21,4 +21,10 @@ export default defineNuxtConfig({
       // Example: privateApiKey: process.env.PRIVATE_API_KEY,
     },
   },
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => tag === 'iconify-icon',
+    },
+  },
+  plugins: [{ src: '~/plugins/iconify-icon.client.js', mode: 'client' }],
 })
