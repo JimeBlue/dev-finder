@@ -2,6 +2,7 @@
   <section v-if="loading">Loading...</section>
   <section v-else-if="error">{{ error }}</section>
   <section v-if="user">
+    <!-- NOTE: user header -->
     <hgroup>
       <h1>
         <span v-if="user.name">{{ user.name }}</span
@@ -11,11 +12,14 @@
       <p class="text-blue-500 dark:text-slate-900">Joined {{ joinedDate }}</p>
     </hgroup>
     <img :src="user.avatar_url" :alt="`Avatar for ${user.login}`" width="100" />
-    <ul>
+    <!-- NOTE: user bio -->
+    <ul v-if="bioItems.length > 0">
       <li v-for="(item, index) in bioItems" :key="index">
         {{ item }}
       </li>
     </ul>
+    <p v-else class="text-gray-400">This profile has no bio.</p>
+
     <!-- NOTE: user stats -->
     <ul
       class="bg-blue-100 dark:bg-gray-900 rounded-xl py-4 px-6 flex items-center justify-between"
