@@ -7,7 +7,7 @@
     <img
       :src="user.avatar_url"
       :alt="`Avatar for ${user.login}`"
-      class="hidden md:block w-[117px] h-[117px]"
+      class="hidden md:block w-[117px] h-[117px] rounded-full"
     />
 
     <section>
@@ -15,7 +15,7 @@
         <img
           :src="user.avatar_url"
           :alt="`Avatar for ${user.login}`"
-          class="md:hidden w-[70px] h-[70px]"
+          class="md:hidden w-[70px] h-[70px] rounded-full"
         />
         <hgroup
           class="mb-7 min-[855px]:w-full min-[855px]:flex min-[855px]:justify-between"
@@ -69,6 +69,7 @@
             :href="item.url"
             target="_blank"
             :class="{ 'hover:underline': item.url }"
+            class="truncate"
             >{{ item.link }}
           </a>
         </li>
