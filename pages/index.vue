@@ -4,7 +4,9 @@
       <input v-model="searchUsername" placeholder="Enter GitHub username" />
       <button type="submit" class="btn btn-primary">Search</button>
     </form>
-    <UserProfile :user="user" :loading="pending" :error="apiError" />
+    <div class="user-profile-skin">
+      <UserProfile :user="user" :loading="pending" :error="apiError" />
+    </div>
   </section>
 </template>
 

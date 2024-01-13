@@ -1,60 +1,74 @@
 <template>
-  <section v-if="loading">Loading...</section>
-  <section v-else-if="error">{{ error }}</section>
-  <section v-if="user">
+  <p v-if="loading">Loading...</p>
+  <p v-else-if="error">{{ error }}</p>
+  <div v-if="user" class="py-8 px-6 md:flex">
     <!-- NOTE: user header -->
-    <hgroup>
-      <h1>
-        <span v-if="user.name">{{ user.name }}</span
-        ><span v-else>{{ user.login }}</span>
-      </h1>
-      <h2>@{{ user.login }}</h2>
-      <p class="text-blue-500 dark:text-slate-900">Joined {{ joinedDate }}</p>
-    </hgroup>
-    <img :src="user.avatar_url" :alt="`Avatar for ${user.login}`" width="100" />
-    <!-- NOTE: user bio -->
-    <ul v-if="bioItems.length > 0">
-      <li v-for="(item, index) in bioItems" :key="index">
-        {{ item }}
-      </li>
-    </ul>
-    <p v-else class="text-gray-400">This profile has no bio.</p>
 
-    <!-- NOTE: user stats -->
-    <ul
-      class="bg-blue-100 dark:bg-gray-900 rounded-xl py-4 px-6 flex items-center justify-between"
-    >
-      <li v-for="(item, index) in statsData" :key="index">
-        <h3 class="text-xs sm:text-sm">{{ item.label }}</h3>
-        <p
-          class="text-base sm:text-xl font-bold text-blue-gray-800 dark:text-white"
-        >
-          {{ item.value }}
-        </p>
-      </li>
-    </ul>
+    <img
+      :src="user.avatar_url"
+      :alt="`Avatar for ${user.login}`"
+      class="hidden md:block w-[117px] h-[117px] border border-green-500"
+    />
 
-    <!-- NOTE: user links -->
-
-    <ul
-      class="grid grid-cols-1 gap-y-4 md:grid-cols-2 md:grid-rows-2 md:gap-y-0 md:gap-4"
-    >
-      <li
-        v-for="(item, index) in userLinksData"
-        :key="index"
-        class="flex items-center space-x-4 text-sm md:text-base"
-        :class="{ 'text-gray-400': item.disabled }"
+    <section>
+      <header class="flex space-x-4">
+        <img
+          :src="user.avatar_url"
+          :alt="`Avatar for ${user.login}`"
+          class="md:hidden w-[70px] h-[70px]"
+        />
+        <hgroup class="mb-7">
+          <h1 class="text-base font-bold text-blue-gray-800 dark:text-white">
+            <span v-if="user.name">{{ user.name }}</span
+            ><span v-else>{{ user.login }}</span>
+          </h1>
+          <p class="text-sm text-primary">@{{ user.login }}</p>
+          <time class="text-sm"> Joined {{ joinedDate }} </time>
+        </hgroup>
+      </header>
+      <!-- NOTE: user bio -->
+      <article class="text-sm mb-6">
+        <ul v-if="bioItems.length > 0">
+          <li v-for="(item, index) in bioItems" :key="index">
+            {{ item }}
+          </li>
+        </ul>
+        <p v-else class="text-gray-400">This profile has no bio.</p>
+      </article>
+      <!-- NOTE: user stats -->
+      <ul
+        class="bg-blue-100 dark:bg-gray-900 rounded-xl flex items-center justify-between py-4 px-6 mb-7"
       >
-        <iconify-icon :icon="item.icon" height="20" width="20"></iconify-icon
-        ><a
-          :href="item.url"
-          target="_blank"
-          :class="{ 'hover:underline': item.url }"
-          >{{ item.link }}
-        </a>
-      </li>
-    </ul>
-  </section>
+        <li v-for="(item, index) in statsData" :key="index">
+          <h3 class="text-xs sm:text-sm">{{ item.label }}</h3>
+          <p
+            class="text-base sm:text-xl font-bold text-blue-gray-800 dark:text-white"
+          >
+            {{ item.value }}
+          </p>
+        </li>
+      </ul>
+      <!-- NOTE: user links -->
+      <ul
+        class="grid grid-cols-1 gap-y-4 md:grid-cols-2 md:grid-rows-2 md:gap-y-0 md:gap-4"
+      >
+        <li
+          v-for="(item, index) in userLinksData"
+          :key="index"
+          class="flex items-center space-x-4 text-sm md:text-base"
+          :class="{ 'text-gray-400': item.disabled }"
+        >
+          <iconify-icon :icon="item.icon" height="20" width="20"></iconify-icon
+          ><a
+            :href="item.url"
+            target="_blank"
+            :class="{ 'hover:underline': item.url }"
+            >{{ item.link }}
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
 </template>
 
 <script setup>

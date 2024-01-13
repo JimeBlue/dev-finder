@@ -26,6 +26,9 @@ export default {
           400: '#697c9a',
           800: '#2b3442',
         },
+        neutral: {
+          50: '#fefefe',
+        },
       },
       fontFamily: {
         sans: [
