@@ -1,6 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { resolve } from 'path'
 export default defineNuxtConfig({
+  app: {
+    head: {
+      title: 'Github Dev Finder',
+    },
+  },
   devtools: { enabled: true },
   alias: { '@': resolve(__dirname, '/') },
   css: ['~/assets/css/index.scss'],
