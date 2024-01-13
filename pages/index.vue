@@ -1,13 +1,32 @@
 <template>
-  <section class="text-blue-500 dark:text-white">
-    <form @submit.prevent="triggerSearch">
-      <input v-model="searchUsername" placeholder="Enter GitHub username" />
-      <button type="submit" class="btn btn-primary">Search</button>
-    </form>
-    <div class="user-profile-skin">
+  <div class="text-blue-500 dark:text-white space-y-4">
+    <section class="section-skin">
+      <form
+        @submit.prevent="triggerSearch"
+        class="flex items-center justify-between py-2 px-2 md:px-0 md:pr-2 md:pl-6"
+      >
+        <div class="flex items-center space-x-2 sm:space-x-4 w-full">
+          <iconify-icon
+            icon="iconamoon:search-light"
+            height="22"
+            width="22"
+            class="text-primary"
+          ></iconify-icon>
+          <input
+            type="text"
+            name="search"
+            v-model="searchUsername"
+            placeholder="Search GitHub username..."
+            class="input-text"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary ml-1">Search</button>
+      </form>
+    </section>
+    <section class="section-skin">
       <UserProfile :user="user" :loading="pending" :error="apiError" />
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script setup>
