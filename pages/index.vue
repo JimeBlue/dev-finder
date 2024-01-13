@@ -1,6 +1,6 @@
 <template>
   <div class="text-blue-500 dark:text-white space-y-4">
-    <section class="section-skin">
+    <section class="section-skin mt-4 md:mt-6">
       <form
         @submit.prevent="triggerSearch"
         class="flex items-center justify-between py-2 px-2 md:px-0 md:pr-2 md:pl-6"
