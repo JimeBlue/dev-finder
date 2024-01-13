@@ -12,8 +12,12 @@
             width="22"
             class="text-primary"
           ></iconify-icon>
+          <label for="searchUsernameInput" class="sr-only"
+            >Search GitHub username</label
+          >
           <input
             type="text"
+            id="searchUsernameInput"
             name="search"
             v-model="searchUsername"
             placeholder="Search GitHub username..."
