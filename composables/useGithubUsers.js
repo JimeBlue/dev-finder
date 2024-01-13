@@ -17,6 +17,7 @@ export const useGithubUsers = (initialUsername = '') => {
       return $fetch(apiUrl.value).catch((err) => {
         if (err.response && err.response.status === 404) {
           userNotFound.value = true
+          searchUser(initialUsername) // Call searchUser with default username
           return null
         }
         throw err
@@ -25,8 +26,13 @@ export const useGithubUsers = (initialUsername = '') => {
   })
 
   const searchUser = (searchUsername) => {
+    if (!searchUsername.trim()) {
+      // If the search query is empty, use the default user
+      username.value = initialUsername
+    } else {
+      username.value = searchUsername
+    }
     userNotFound.value = false
-    username.value = searchUsername
     refresh()
   }
 

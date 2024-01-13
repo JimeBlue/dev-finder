@@ -49,6 +49,10 @@ const apiError = computed(() => {
 })
 
 const triggerSearch = () => {
-  searchUser(searchUsername.value)
+  if (!searchUsername.value.trim()) {
+    searchUser('JimeBlue') // Default user when search is empty
+  } else {
+    searchUser(searchUsername.value)
+  }
 }
 </script>
