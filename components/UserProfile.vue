@@ -1,33 +1,39 @@
 <template>
   <p v-if="loading">Loading...</p>
   <p v-else-if="error">{{ error }}</p>
-  <div v-if="user" class="py-8 px-6 md:flex">
+  <div v-if="user" class="py-8 px-6 md:flex md:space-x-6">
     <!-- NOTE: user header -->
 
     <img
       :src="user.avatar_url"
       :alt="`Avatar for ${user.login}`"
-      class="hidden md:block w-[117px] h-[117px] border border-green-500"
+      class="hidden md:block w-[117px] h-[117px]"
     />
 
     <section>
-      <header class="flex space-x-4">
+      <header class="flex space-x-4 md:space-x-0">
         <img
           :src="user.avatar_url"
           :alt="`Avatar for ${user.login}`"
           class="md:hidden w-[70px] h-[70px]"
         />
-        <hgroup class="mb-7">
-          <h1 class="text-base font-bold text-blue-gray-800 dark:text-white">
-            <span v-if="user.name">{{ user.name }}</span
-            ><span v-else>{{ user.login }}</span>
-          </h1>
-          <p class="text-sm text-primary">@{{ user.login }}</p>
-          <time class="text-sm"> Joined {{ joinedDate }} </time>
+        <hgroup
+          class="mb-7 min-[855px]:w-full min-[855px]:flex min-[855px]:justify-between"
+        >
+          <div>
+            <h1
+              class="text-base md:text-2xl font-bold text-blue-gray-800 dark:text-white"
+            >
+              <span v-if="user.name">{{ user.name }}</span
+              ><span v-else>{{ user.login }}</span>
+            </h1>
+            <p class="text-sm md:text-base text-primary">@{{ user.login }}</p>
+          </div>
+          <time class="text-sm md:text-base"> Joined {{ joinedDate }} </time>
         </hgroup>
       </header>
       <!-- NOTE: user bio -->
-      <article class="text-sm mb-6">
+      <article class="text-sm md:text-base mb-6">
         <ul v-if="bioItems.length > 0">
           <li v-for="(item, index) in bioItems" :key="index">
             {{ item }}
