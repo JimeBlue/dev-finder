@@ -3,5 +3,5 @@
 }
 
 .section-skin {
-  @apply rounded-2xl bg-neutral-50 dark:bg-blue-900;
+  @apply rounded-2xl bg-neutral-50 dark:bg-blue-900 shadow-sectionShadow dark:shadow-none;
 }

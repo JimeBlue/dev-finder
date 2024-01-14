@@ -30,6 +30,9 @@ export default {
           50: '#fefefe',
         },
       },
+      boxShadow: {
+        sectionShadow: '0 16px 30px -10px rgba(70, 96, 187, 0.2)',
+      },
       fontFamily: {
         sans: [
           'Space Mono',
