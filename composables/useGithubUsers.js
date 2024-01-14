@@ -2,6 +2,7 @@ export const useGithubUsers = (initialUsername = '') => {
   const config = useRuntimeConfig()
   const username = ref('')
   const userNotFound = ref(false)
+  const emptySearch = ref(false)
 
   const apiUrl = computed(() =>
     username.value ? `${config.public.githubUsersApi}/${username.value}` : null,
@@ -17,7 +18,6 @@ export const useGithubUsers = (initialUsername = '') => {
       return $fetch(apiUrl.value).catch((err) => {
         if (err.response && err.response.status === 404) {
           userNotFound.value = true
-          searchUser(initialUsername) // Call searchUser with default username
           return null
         }
         throw err
@@ -26,13 +26,18 @@ export const useGithubUsers = (initialUsername = '') => {
   })
 
   const searchUser = (searchUsername) => {
-    if (!searchUsername.trim()) {
-      // If the search query is empty, use the default user
-      username.value = initialUsername
-    } else {
-      username.value = searchUsername
-    }
+    // Reset the states at the beginning of each search
+    emptySearch.value = !searchUsername.trim()
     userNotFound.value = false
+
+    // Handle empty search
+    if (emptySearch.value) {
+      user.value = null // Also reset the user value for an empty search
+      return
+    }
+
+    // Proceed with a normal search
+    username.value = searchUsername
     refresh()
   }
 
@@ -40,5 +45,5 @@ export const useGithubUsers = (initialUsername = '') => {
     searchUser(initialUsername)
   }
 
-  return { user, pending, error, searchUser, userNotFound }
+  return { user, pending, error, searchUser, userNotFound, emptySearch }
 }

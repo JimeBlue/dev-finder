@@ -27,14 +27,20 @@
         <button type="submit" class="btn btn-primary ml-1">Search</button>
       </form>
     </section>
-    <section class="section-skin">
+    <section v-if="userNotFound" class="section-skin py-8 px-6">
+      <UserNotFound />
+    </section>
+    <section v-else-if="emptySearch" class="section-skin py-8 px-6">
+      <EmptySearch />
+    </section>
+    <section v-else class="section-skin">
       <UserProfile :user="user" :loading="pending" :error="apiError" />
     </section>
   </div>
 </template>
 
 <script setup>
-const { user, pending, error, searchUser, userNotFound } =
+const { user, pending, error, searchUser, userNotFound, emptySearch } =
   useGithubUsers('JimeBlue')
 
 const searchUsername = ref('')
@@ -49,10 +55,6 @@ const apiError = computed(() => {
 })
 
 const triggerSearch = () => {
-  if (!searchUsername.value.trim()) {
-    searchUser('JimeBlue') // Default user when search is empty
-  } else {
-    searchUser(searchUsername.value)
-  }
+  searchUser(searchUsername.value)
 }
 </script>

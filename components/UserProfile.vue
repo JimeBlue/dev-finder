@@ -3,7 +3,6 @@
   <p v-else-if="error">{{ error }}</p>
   <div v-if="user" class="py-8 px-6 md:flex md:space-x-6">
     <!-- NOTE: user header -->
-
     <img
       :src="user.avatar_url"
       :alt="`Avatar for ${user.login}`"

@@ -6,6 +6,8 @@ export default defineNuxtConfig({
       title: 'Github Dev Finder',
     },
   },
+  modules: ['@nuxt/image'],
+
   devtools: { enabled: true },
   alias: { '@': resolve(__dirname, '/') },
   css: ['~/assets/css/index.scss'],
