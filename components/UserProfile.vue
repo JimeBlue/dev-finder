@@ -1,15 +1,17 @@
 <template>
   <p v-if="loading">Loading...</p>
   <p v-else-if="error">{{ error }}</p>
-  <div v-if="user" class="py-8 px-6 md:flex md:space-x-6">
+  <div v-if="user" class="py-8 px-6 md:px-10 md:grid grid-cols-12">
     <!-- NOTE: user header -->
-    <img
-      :src="user.avatar_url"
-      :alt="`Avatar for ${user.login}`"
-      class="hidden md:block w-[117px] h-[117px] rounded-full"
-    />
+    <section class="hidden md:block col-span-3">
+      <img
+        :src="user.avatar_url"
+        :alt="`Avatar for ${user.login}`"
+        class="rounded-full w-[85%]"
+      />
+    </section>
 
-    <section>
+    <section class="md:col-span-9">
       <header class="flex space-x-4 md:space-x-0">
         <img
           :src="user.avatar_url"
