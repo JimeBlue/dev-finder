@@ -27,8 +27,9 @@
         <button type="submit" class="btn btn-primary ml-1">Search</button>
       </form>
     </section>
-    <section v-if="userNotFound" class="section-skin py-8 px-6">
-      <UserNotFound />
+
+    <section v-if="apiError" class="section-skin py-8 px-6">
+      <ErrorMessage :apiError="apiError" />
     </section>
     <section v-else-if="emptySearch" class="section-skin py-8 px-6">
       <EmptySearch />
@@ -49,7 +50,7 @@ const apiError = computed(() => {
   if (userNotFound.value) {
     return 'No results'
   } else if (error.value) {
-    return 'An error occurred.'
+    return 'An error occurred'
   }
   return null
 })
