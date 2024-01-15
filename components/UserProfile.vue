@@ -67,8 +67,10 @@
           class="flex items-center space-x-4 text-sm md:text-base"
           :class="{ 'text-gray-400': item.disabled }"
         >
-          <iconify-icon :icon="item.icon" height="20" width="20"></iconify-icon
-          ><a
+          <iconify-icon :icon="item.icon" height="20" width="20"></iconify-icon>
+          <p v-if="item.isLocation">{{ item.text }}</p>
+          <a
+            v-else
             :href="item.url"
             target="_blank"
             :class="{ 'hover:underline': item.url }"
@@ -157,9 +159,11 @@ const userLinksData = computed(() => {
   const data = [
     {
       icon: 'mdi:location',
-      link: props.user.location ? props.user.location : 'Not Available',
+      link: '',
       disabled: !props.user.location,
       url: '',
+      isLocation: true,
+      text: props.user.location ? props.user.location : 'Not Available',
     },
     {
       icon: 'mdi:twitter',
@@ -168,18 +172,24 @@ const userLinksData = computed(() => {
         : 'Not Available',
       disabled: !props.user.twitter_username,
       url: formatTwitterUrl(props.user.twitter_username),
+      isLocation: false,
+      text: '',
     },
     {
       icon: 'pepicons-pop:chain',
       link: formatBlogUrl(props.user.blog),
       disabled: !props.user.blog,
       url: props.user.blog,
+      isLocation: false,
+      text: '',
     },
     {
       icon: 'fluent:building-20-filled',
       link: props.user.company ? props.user.company : 'Not Available',
       disabled: !props.user.company,
       url: formatCompanyUrl(props.user.company),
+      isLocation: false,
+      text: '',
     },
   ]
   return data
