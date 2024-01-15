@@ -8,7 +8,7 @@
     >
       Whoops {{ apiError }}!
     </h2>
-    <NuxtImg
+    <img
       src="/images/not-found.png"
       class="w-1/2 md:w-3/12 mx-auto"
       alt="computer with sad face"
@@ -25,7 +25,7 @@
     >
       Whoops {{ apiError }}!
     </h2>
-    <NuxtImg
+    <img
       src="/images/error.png"
       class="w-1/2 md:w-3/12 mx-auto"
       alt="computer dead face"
