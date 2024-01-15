@@ -5,7 +5,7 @@
     >
       Whoops Empty search!
     </h2>
-    <NuxtImg
+    <img
       src="/images/computer.png"
       class="w-1/2 md:w-3/12 mx-auto"
       alt="Gohst coming up from computer"
