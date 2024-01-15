@@ -70,13 +70,15 @@
           <iconify-icon :icon="item.icon" height="20" width="20"></iconify-icon>
           <p v-if="item.isLocation">{{ item.text }}</p>
           <a
-            v-else
+            v-else-if="item.url"
             :href="item.url"
             target="_blank"
-            :class="{ 'hover:underline': item.url }"
-            class="truncate"
-            >{{ item.link }}
-          </a>
+            class="hover:underline truncate"
+            >{{ item.link }}</a
+          >
+          <span v-else :class="{ 'text-gray-400': item.disabled }">{{
+            item.link
+          }}</span>
         </li>
       </ul>
     </section>
@@ -149,12 +151,13 @@ const userLinksData = computed(() => {
   }
 
   const formatBlogUrl = (url) => {
-    if (!url) return 'Not Available'
+    if (!url) return null
 
     // Remove 'http://' or 'https://' from the URL
     return url.replace(/^https?:\/\//, '')
   }
 
+  const blogUrl = formatBlogUrl(props.user.blog)
   // Creates an array of objects for user links section
   const data = [
     {
@@ -177,9 +180,9 @@ const userLinksData = computed(() => {
     },
     {
       icon: 'pepicons-pop:chain',
-      link: formatBlogUrl(props.user.blog),
-      disabled: !props.user.blog,
-      url: props.user.blog,
+      link: blogUrl ? blogUrl : 'Not Available', // Display formatted URL or 'Not Available'
+      disabled: !blogUrl,
+      url: props.user.blog, // Keep the original URL for the actual link
       isLocation: false,
       text: '',
     },
