@@ -1,5 +1,5 @@
 <template>
-  <div class="text-blue-500 dark:text-white space-y-4">
+  <div class="text-blue-500 dark:text-white space-y-4 md:space-y-6">
     <section class="section-skin mt-4 md:mt-6">
       <form
         @submit.prevent="triggerSearch"

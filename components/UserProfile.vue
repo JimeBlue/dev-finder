@@ -3,7 +3,10 @@
     <LoaderSkeleton />
   </div>
 
-  <div v-if="user" class="py-8 px-6 md:px-10 md:grid md:grid-cols-12 md:gap-6">
+  <div
+    v-if="user"
+    class="py-8 md:py-14 px-6 md:px-10 md:grid md:grid-cols-12 md:gap-6"
+  >
     <!-- NOTE: user header -->
     <section class="hidden md:block md:col-span-2">
       <img
