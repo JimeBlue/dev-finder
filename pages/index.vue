@@ -35,13 +35,13 @@
       <EmptySearch />
     </section>
     <section v-else class="section-skin">
-      <UserProfile :user="user" :loading="pending" :error="apiError" />
+      <UserProfile :user="user" :loading="debouncedLoading" :error="apiError" />
     </section>
   </div>
 </template>
 
 <script setup>
-const { user, pending, error, searchUser, userNotFound, emptySearch } =
+const { user, error, searchUser, userNotFound, emptySearch, debouncedLoading } =
   useGithubUsers('JimeBlue')
 
 const searchUsername = ref('')
