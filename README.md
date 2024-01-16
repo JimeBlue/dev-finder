@@ -1,5 +1,7 @@
 # devfinder - GitHub user search app solution
 
+**Live Site URL:** [https://lm-github-user-search.netlify.app/](https://dev-scout.netlify.app/)
+
 This is a solution to the [GitHub user search app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/github-user-search-app-Q09YOgaH6). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
 ## Table of contents
@@ -8,11 +10,11 @@ This is a solution to the [GitHub user search app challenge on Frontend Mentor](
   - [User Story](#user-story)
   - [Expected behaviour](#expected-behaviour)
   - [Design](#design)
-  - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
+  - [Featured Code](#featured-code)
 - [Setup](#setup)
+- [Usage](#usage)
 
 ## Overview
 
@@ -28,8 +30,6 @@ Users should be able to:
 - Have the correct color scheme chosen for them based on their computer preferences.
 - Persist theme with localStorage
 
-The GitHub users API endpoint is `https://api.github.com/users/:username`. So, if you wanted to search for the Octocat profile, you'd be able to make a request to `https://api.github.com/users/octocat`.
-
 ### Expected behaviour
 
 - On first load, show the profile information for NinjaInShade (me).
@@ -41,128 +41,174 @@ The GitHub users API endpoint is `https://api.github.com/users/:username`. So, i
 
 ### Design
 
-![](./screenshots/Desktop_solution.png)
-![](./screenshots/Desktop_light_solution.png)
-![](./screenshots/Mobile_solution.png)
+**Mobile**
+<br />
+<img width="506" alt="mobile" src="https://github.com/JimeBlue/dev-finder/assets/84801660/d92e83f3-1a25-4165-855e-962c1e4683f3">
 
-### Links
+**Tablet**
+<br />
+<img width="559" alt="tablet" src="https://github.com/JimeBlue/dev-finder/assets/84801660/cb28af44-1a38-4810-89c4-29ce7f7d8375">
 
-- Solution URL: (https://www.frontendmentor.io/solutions/responsive-github-api-user-search-api-with-darklight-theme-switch-rqG2i-9TT)
-- Live Site URL: (https://lm-github-user-search.netlify.app/)
+**Desktop**
+<br />
+<img width="553" alt="desktop" src="https://github.com/JimeBlue/dev-finder/assets/84801660/ecded89f-444a-480d-82c0-8fe0b0a02c47">
+
 
 ## My process
 
 ### Built with
 
-- Semantic HTML5 markup
-- CSS custom properties/vars
-- Desktop-first workflow
-- Javascript
-- Fetch API
+
+- Nuxt 3
+- Vue 3
+- Tailwind CSS
 - Github API
+- SCSS
+- Iconify Icons
+- Mobile-first workflow
+- Semantic HTML5 markup
 
-### What I learned
+### Featured Code
 
-The fetching from the API part wasn't so hard. I did get confused for a second with promises and what was actually getting returned, but I figured it out.
+#### - Use of Composables
 
-The bulk of this project was spent structuring the dark/light theme modes, and colours in a clean and scalable manner.
+Use composables **UseDarkMode** and **useGithubUsers** to encapsulate and reuse logic for the dark/light theme change and for interacting with the GitHub user data respectively.
 
-I looked at the design file and calculated similar var names, so all I'd have to do no additional styling in the CSS file of that component, just switch the global CSS vars, and it would work. I used this by setting vars on body, and then overriding those vars in the body class if it also had a "dark-theme" class:
-
-```css
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--bg);
-  min-height: 100vh;
-  padding: 75px 96px;
-
-  /* Lightmode */
-  --primary: #0079ff;
-
-  --txt-high-contrast: #2b3442;
-  --txt-mid-contrast: #4b6a9b;
-  --txt-low-contrast: #697c9a;
-
-  --bg: #f6f8ff;
-  --bg-secondary: #fefefe;
-
-  --theme-switch-btn-hover: #222731;
-
-  /* Neutral */
-  --error: #f74646;
-}
-
-body.dark-theme {
-  background-color: var(--bg);
-
-  /* Darkmode */
-  --primary: #0079ff;
-
-  --txt-high-contrast: #fff;
-  --txt-mid-contrast: #ffff;
-  --txt-low-contrast: #fff;
-
-  --bg: #141d2f;
-  --bg-secondary: #1e2a47;
-
-  --theme-switch-btn-hover: #90a4d4;
-
-  /* Neutral */
-  --error: #f74646;
-}
-```
-
-I also set the default colour theme based on the users colour preference on their OS, using some Javascript:
+UseDarkMode.js
 
 ```js
-// If user has dark preference, set the dark theme by default.
-const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+export const useDarkMode = () => {
+  const darkMode = ref(false)
 
-if (prefersDarkScheme.matches) {
-  document.body.classList.add('dark-theme');
-} else {
-  document.body.classList.remove('dark-theme');
+  //   applies the .dark class to the documentElement based on the darkMode value.
+  const updateDarkModeClass = () => {
+    if (darkMode.value) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  }
+
+  // Toggles the theme and saves the user's preference in localStorage.
+  // This allows the user to manually select their preferred theme, overriding the system preference.
+  const toggleDarkMode = () => {
+    darkMode.value = !darkMode.value
+    localStorage.setItem('darkMode', darkMode.value ? 'dark' : 'light')
+    updateDarkModeClass()
+  }
+
+  onMounted(() => {
+    // Check for saved theme in localStorage and system preference
+    const savedTheme = localStorage.getItem('darkMode')
+    if (savedTheme) {
+      darkMode.value = savedTheme === 'dark'
+    } else {
+      // If no saved theme, use system preference
+      darkMode.value = window.matchMedia('(prefers-color-scheme: dark)').matches
+    }
+    updateDarkModeClass()
+  })
+
+  watch(darkMode, (newValue) => {
+    updateDarkModeClass()
+  })
+
+  return {
+    darkMode,
+    toggleDarkMode,
+  }
 }
+
 ```
 
-I then developed this bit of code even further to incorporate localStorage.
-
-If the user changes the theme, this persists in localStorage. So, the next time they go to the site, it's on the theme they selected last. This should override any OS preference, which I took into consideration. This is what I coded for this:
+useGithubUsers.js
 
 ```js
-function initTheme() {
-  // If user has dark preference, set the dark theme by default.
+export const useGithubUsers = (initialUsername = '') => {
+  const config = useRuntimeConfig()
+  const username = ref('')
+  const userNotFound = ref(false)
+  const emptySearch = ref(false)
+  const debouncedLoading = ref(false)
 
-  // LocalStorage overrides this however, as the user has then changed the theme,
-  // which we want to persist to those settings then.
-  const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-  const storedTheme = localStorage.getItem('theme');
+  const apiUrl = computed(() =>
+    username.value ? `${config.public.githubUsersApi}/${username.value}` : null,
+  )
 
-  if (storedTheme === 'dark') {
-    ThemeSwitchTxt.innerText = 'Light';
+  let debounceTimer
 
-    // Update theme classes toggles body class, and toggles the moon/sun icons to change over.
-    return updateThemeClasses();
+  const setDebouncedLoading = (value, delay = 500) => {
+    clearTimeout(debounceTimer)
+    debounceTimer = setTimeout(() => {
+      debouncedLoading.value = value
+    }, delay)
   }
 
-  if (prefersDarkScheme.matches) {
-    ThemeSwitchTxt.innerText = 'Dark';
+  const {
+    data: user,
+    pending,
+    error,
+    refresh,
+  } = useAsyncData(() => {
+    if (apiUrl.value) {
+      // Start debounced loading
+      setDebouncedLoading(true)
 
-    return updateThemeClasses();
+      return $fetch(apiUrl.value)
+        .then((response) => {
+          // Stop debounced loading
+          setDebouncedLoading(false)
+          return response
+        })
+        .catch((err) => {
+          setDebouncedLoading(false)
+
+          if (err.response && err.response.status === 404) {
+            userNotFound.value = true
+            return null
+          }
+          throw err
+        })
+    }
+  })
+
+  const searchUser = (searchUsername) => {
+    // Reset the states at the beginning of each search
+    emptySearch.value = !searchUsername.trim()
+    userNotFound.value = false
+
+    // Handle empty search
+    if (emptySearch.value) {
+      user.value = null // Also reset the user value for an empty search
+      return
+    }
+
+    // Proceed with a normal search
+    username.value = searchUsername
+    refresh()
+  }
+
+  if (initialUsername) {
+    searchUser(initialUsername)
+  }
+
+  return {
+    user,
+    pending,
+    error,
+    searchUser,
+    userNotFound,
+    emptySearch,
+    debouncedLoading,
   }
 }
+
 ```
 
-
-# Nuxt 3 Minimal Starter
-
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ## Setup
 
-Make sure to install the dependencies:
+To get started with the Nuxt 3 Minimal Starter, first install the dependencies. Choose the package manager you prefer:
 
 ```bash
 # npm
@@ -178,9 +224,11 @@ yarn install
 bun install
 ```
 
-## Development Server
+## Usage
 
-Start the development server on `http://localhost:3000`:
+**Development Server:**
+
+To start the development server, run the following command. Your application will be available at http://localhost:3000:
 
 ```bash
 # npm
@@ -196,7 +244,7 @@ yarn dev
 bun run dev
 ```
 
-## Production
+**Production:**
 
 Build the application for production:
 
