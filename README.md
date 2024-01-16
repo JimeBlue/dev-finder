@@ -33,7 +33,7 @@ Users should be able to:
 ### Expected behaviour
 
 - On first load, show the profile information for NinjaInShade (me).
-- Display an error message (as shown in the design) if no user is found when a new search is made.
+- Display an error page if no user is found or if there is an empty search.
 - If a GitHub user hasn't added their name, show their username where the name would be without the `@` symbol and again below with the `@` symbol.
 - If a GitHub user's bio is empty, show the text "This profile has no bio" with transparency added (as shown in the design). The lorem ipsum text in the designs shows how the bio should look when it is present.
 - If any of the location, website, twitter, or company properties are empty, show the text "Not Available" with transparency added (as shown in the design).
